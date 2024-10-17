@@ -9,7 +9,7 @@ const showRestart: boolean = false
 const addSecs: number = 3
 // Remove uma quantidade de segundos ao acertar o emoji repetido
 const removeSecs: number = 1
-// Quantidade de emojis iniciais no nivel 1 (53 no maximo)
+// Quantidade de emojis iniciais no nivel 1 (52 no maximo)
 const amountInitialEmojis: number = 16
 // Quantidade de segundos ao iniciar uma partida
 const initialTimer: number = 10
