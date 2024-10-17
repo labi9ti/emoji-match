@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { emojis } from '~/static/emojis';
 import CountDown from '~/components/CountDown.vue';
 
 // Mostra a opção de reiniciar a partida (false / true)
-const showRestart: boolean = true
+const showRestart: boolean = false
 // Adiciona uma quantidade de segundos ao acertar o emoji repetido
 const addSecs: number = 3
 // Remove uma quantidade de segundos ao acertar o emoji repetido
@@ -12,7 +12,7 @@ const removeSecs: number = 1
 // Quantidade de emojis iniciais no nivel 1 (60 no maximo)
 const amountInitialEmojis: number = 16
 // Quantidade de segundos ao iniciar uma partida
-const initialTimer: number = 30
+const initialTimer: number = 10
 // Nome do jogo
 const gameName: string = "Emoji Match"
 // Mensagem que aparece quando o tempo acaba
@@ -22,14 +22,15 @@ const addEmojisEachLevel: number = 2
 // Quantidade de emojis adicionados a cada X niveis
 const addAmountEmojis: number = 4
 // Tamanho maximo que ocupam na tela
-const gameWidth: number = 800
+const gameWidth: number = 400
 
-
+// Daqui em diante é aonde a magia acontece
+const gameOver = localStorage.getItem('emoji-game-over') === 'true' && !showRestart
 const totalEmoji = ref<number>(amountInitialEmojis)
 const timer = ref<number>(initialTimer)
 const level = ref<number>(0)
 const isPlaying = ref<boolean>(false)
-const isGameOver = ref<boolean>(false)
+const isGameOver = ref<boolean>(gameOver)
 
 const allEmojis = ref<Array<string>>([])
 const correctEmoji = ref<string>()
@@ -169,6 +170,10 @@ function shuffle(array: Array<string>) {
 
   return array;
 }
+
+watch(isGameOver, (val) => {
+  localStorage.setItem('emoji-game-over', val.toString())
+})
 </script>
 
 <template>
